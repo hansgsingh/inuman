@@ -7,7 +7,13 @@
 {% block content %}
     <div class="hero-image">
         <div class="hero-text">
+            {% if current_user.is_authenticated %}
+            <h1><b>WELCOME TO iNUMAN {{current_user.username}}</b></h1>
+            {% else %}
             <h1><b>WELCOME TO iNUMAN</b></h1>
+
+            {% endif %}
+
         </div>
     </div> 
     <section id="servers">

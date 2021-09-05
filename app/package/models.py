@@ -1,17 +1,13 @@
-from flask import Flask, render_template, request, url_for
-from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from package import db, login_manager
+from flask_login import UserMixin
 
 
-app = Flask(__name__)
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
-# Configs
-app.config['SECRET_KEY'] = 'Super secret key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-
-db = SQLAlchemy(app)
-
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
@@ -58,24 +54,3 @@ class AppServerRoom(db.Model):
         id: {self.id},
         name: {self.name},
         clients: User IDs {[user.id for user in self.clients]}\n\n"""
-
-
-@app.route('/')
-def index():
-    servers = AppServer.query.all()
-    return render_template('index.html', servers=servers)
-
-@app.route('/<int:server_id>')
-def show_server(server_id):
-    server = AppServer.query.get(server_id)
-    return render_template('show_server.html', server=server)
-
-@app.route('/<int:server_id>/<int:room_id>')
-def show_room(server_id, room_id):
-    room = AppServerRoom.query.get(room_id)
-    return render_template('show_room.html', room=room)
-
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
