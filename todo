@@ -1,1 +1,10 @@
+register
+create server
+create room 
+
 show_room chat app
+join table 
+whisper
+video call
+store messages in db?
+add socket_id to current_user
