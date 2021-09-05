@@ -79,6 +79,16 @@ body, html {
 
 
 .title {
-  font-size: 70px;
+  font-size: 75px;
   font-family: 'Josefin Sans', sans-serif;
+  border-bottom: 2px solid white; 
+  line-height: 0.001em;
+  width: 100%;
+  margin: 10px 0 40px; 
 }
+
+.title span {
+  background-color:black;
+  padding:0 40px; 
+}
+
