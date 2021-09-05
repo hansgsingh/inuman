@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for
 from package import app
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 
 from package.models import User, AppServer, AppServerRoom
 
@@ -21,6 +21,7 @@ def index():
     return render_template('index.html', servers=servers)
 
 @app.route('/<int:server_id>')
+@login_required
 def show_server(server_id):
     server = AppServer.query.get(server_id)
     return render_template('show_server.html', server=server)
