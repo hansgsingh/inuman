@@ -3,10 +3,20 @@ const socket = io('/show_server')
 socket.on('connect', ()=>{
     console.log(socket.id + ' connected')
     socket.emit('join')
+    setTimeout(()=>{
+        socket.emit('user_just_joined')
+    }, 120000)
 })
 
 socket.on('joined', (user)=>{
     console.log(user.username + ' connected')
+
+    let msg_div = '<div class="d-flex justify-content-center">'
+    let msg_p = '-------------- ' + user.username + '</b> joined the room --------------'
+    let msg_end_div = '</div>'
+    
+    let msg_html = msg_div + msg_p + msg_end_div
+    msg_container.innerHTML += msg_html
 })
 
 socket.on('append_msg', (data) => {

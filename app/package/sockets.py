@@ -3,6 +3,13 @@ from flask_login import current_user
 from flask_socketio import emit, join_room, leave_room
 
 SHOW_SERVER_ROOM_USERS = []
+USERS_WHO_JUST_JOINED = []
+
+
+@sio.on('user_just_joined', namespace='/show_server')
+def _():
+    print('60 SECONDS HAS PAST')
+    USERS_WHO_JUST_JOINED.remove(current_user.username)
 
 
 @sio.on('connect', namespace='/show_server')
@@ -15,16 +22,25 @@ def _():
     print(current_user.username + ' left the show_server_room')
     leave_room('show_server_room')
     SHOW_SERVER_ROOM_USERS.remove(current_user.username)
+    print(SHOW_SERVER_ROOM_USERS)
 
 
 @sio.on('join', namespace='/show_server')
 def _():
-    SHOW_SERVER_ROOM_USERS.append(current_user.username)
-    join_room('show_server_room')
-    print(f"{current_user.username} joined show_server_room")
-    emit('joined', {'username': current_user.username}, broadcast=True)
+    if current_user.username not in SHOW_SERVER_ROOM_USERS:
+        join_room('show_server_room')
+        SHOW_SERVER_ROOM_USERS.append(current_user.username)
+
+    if current_user.username not in USERS_WHO_JUST_JOINED:
+        print(f"{current_user.username} joined show_server_room")
+        USERS_WHO_JUST_JOINED.append(current_user.username)
+        emit('joined', {'username': current_user.username}, to='show_server_room', include_self=False)
+
+
+        
 
 
 @sio.on('new_msg', namespace='/show_server')
 def _(data):
+    print(current_user.username + ' sent a message on show_server_room')
     emit('append_msg', {'username': current_user.username, 'msg': data['msg']}, to='show_server_room', include_self=False)

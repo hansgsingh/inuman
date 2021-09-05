@@ -16,37 +16,59 @@
         </div>
     </div> 
     <section id="servers">
+        <h1 class="text-center mt-4 title">SERVERS</h1>
         <div class="container-fluid">
-            <h1 class="text-center mt-4">SERVERS</h1>
             <div class="row server-info">
-                <div class="col-lg-8">
-                    <h3>The Beech</h3>
+                <div class="col-lg-3">
+                    <h1 class="server-name">The Beech</h3>
                     <h5>RANKED #3</h5>
                     <h5>USERS INSIDE: 130</h5>
                     <h5>CAPACITY: 150</h5>
                     <h5>ENTRANCE FEE: Free</h5>
 
                 </div>
-                
+                <div class="col-lg-2" style="border-left: 1px solid white;"> 
+                    <h5>RANKED #3</h5>
+                    <h5>USERS INSIDE: 130</h5>
+                    <h5>CAPACITY: 150</h5>
+                    <h5>ENTRANCE FEE: Free</h5>
+                </div>
+                <div class="col-lg-3"></div>
                 <div class="col-lg-4 text-center server-buttons">
-                    <a class="btn btn-light mb-2" href="{{url_for('show_server', server_id=1)}}">Enter Server</a>
+                    <a href="{{url_for('show_server', server_id=1)}}" class="enter-server">
+                        ENTER 
+                    </a>
+
+                    <!-- <a class="btn mb-2" href=""><b>Enter Server</b></a> -->
                 </div>
             </div>
             <hr>
+
             <div class="row server-info">
-                <div class="col-lg-8">
-                    <h3>Other Server Name</h3>
+                <div class="col-lg-3">
+                    <h1 class="server-name">Other Server name</h3>
                     <h5>RANKED #3</h5>
                     <h5>USERS INSIDE: 130</h5>
                     <h5>CAPACITY: 150</h5>
                     <h5>ENTRANCE FEE: Free</h5>
 
                 </div>
-                
+                <div class="col-lg-2" style="border-left: 1px solid white;"> 
+                    <h5>RANKED #3</h5>
+                    <h5>USERS INSIDE: 130</h5>
+                    <h5>CAPACITY: 150</h5>
+                    <h5>ENTRANCE FEE: Free</h5>
+                </div>
+                <div class="col-lg-3"></div>
+
                 <div class="col-lg-4 text-center server-buttons">
-                    <button class="btn btn-light mb-2">Enter Server</button>
+                    <a href="#" class="enter-server">
+                        <h1>ENTER</h1>
+                    </a>
                 </div>
             </div>
+            <hr>
+            
 
         </div>
     </section>

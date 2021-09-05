@@ -33,11 +33,52 @@ body, html {
     background-color: black;
 }
 
-.server-info {
-    background-color: #1F2833;
-    color: white;
+#servers > .container-fluid {
+  background-color: #1F2833;
+
 }
 
+.server-info {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.server-name {
+  font-family: 'Yeseva One', cursive;
+
+}
 .server-buttons {
-    margin-top: 3.5%;
+    margin-top: 0%;
+}
+
+.server-buttons .enter-server{
+  display: block;
+  height: 100%;
+  width: 100%;
+  background-color: #ffffff;
+  text-decoration: none;
+}
+
+.server-buttons .enter-server:hover{
+  background-color: black;
+  color: white;
+  transition: 0.5s;
+  text-decoration: none;
+}
+
+.server-buttons .enter-server {
+  padding-top: 10%;
+  font-size: 40px;
+  color: black;
+}
+
+
+.server-buttons .enter-server h1:hover{
+  color: white;
+}
+
+
+.title {
+  font-size: 70px;
+  font-family: 'Josefin Sans', sans-serif;
 }
