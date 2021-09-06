@@ -27,9 +27,9 @@
 
 <section id="live_chat">
     <div class="container mt-4">
-        <h1 class="text-center">{{server.name}}</h1>
-        <h1 class="text-center">Chat (TEST)</h1>
-        <h5 class="text-center" id="active_users_count">CONNECTED USERS: </h5>
+        <h1 class="text-center" id="server-name">{{server.name}}</h1>
+        <h1 class="text-center" id="server-chat-title">Chat (TEST)</h1>
+        <h5 class="text-center" id="active-users-count">CONNECTED USERS: </h5>
         <div id="msg_container">
         </div>
         <div class="d-flex">
@@ -51,7 +51,7 @@
                         TABLE 1
                         <br>
                         <!-- <a href="{{ url_for('show_room', server_id=1, room_id=1) }}">JOIN</a> -->
-                        <button data-link="{{ url_for('show_room', server_id=1, room_id=1) }}" class="join-table"><span>JOIN</span></button>
+                        <button data-link="{{ url_for('show_room', server_id=1, room_id=1) }}" class="btn join-table"><span>JOIN</span></button>
                     </div>
                 </div>
                 <div class="round ms-5">

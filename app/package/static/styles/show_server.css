@@ -41,6 +41,25 @@ body, html {
     color:white;
 }
 
+#server-name {
+  font-family: 'Yeseva One', cursive;
+  font-size: 70px;
+
+}
+
+#server-chat-title {
+    font-family: 'Josefin Sans', sans-serif;
+
+}
+
+#active-users-count {
+    font-family: 'Josefin Sans', sans-serif;
+
+    font-size: 15px;
+    font-style:normal;
+
+}
+
 #hide-show-dj {
     height: 5vh;
     border-radius: 10px;
@@ -53,6 +72,20 @@ body, html {
 
 #rooms {
     color: white;
+    font-family: 'Josefin Sans', sans-serif;
+
+
+}
+
+.join-table {
+    border-radius: 20px;
+    padding: 10 5 10;
+    background-color: white;
+}
+
+.join-table:hover {
+    background-color: black;
+    color: white;
 }
 
 .round {
@@ -63,7 +96,7 @@ body, html {
 }
 
 .round-text {
-    padding: 40px;
+    padding: 30px;
     margin-top: 20px;
 }
 

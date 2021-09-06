@@ -10,7 +10,7 @@ socket.on('connect', ()=>{
 })
 
 socket.on('connected_users_count', (data)=>{
-    let users_count_element = document.getElementById('active_users_count')
+    let users_count_element = document.getElementById('active-users-count')
     users_count_element.innerHTML = 'CONNECTED USERS: ' + data.users_count
 })
 
