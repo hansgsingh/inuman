@@ -2,11 +2,19 @@ const socket = io('/show_server')
 
 socket.on('connect', ()=>{
     console.log(socket.id + ' connected')
+
     socket.emit('join')
     setTimeout(()=>{
         socket.emit('user_just_joined')
     }, 120000)
 })
+
+socket.on('connected_users_count', (data)=>{
+    let users_count_element = document.getElementById('active_users_count')
+    users_count_element.innerHTML = 'CONNECTED USERS: ' + data.users_count
+})
+
+
 
 socket.on('joined', (user)=>{
     console.log(user.username + ' connected')

@@ -17,12 +17,15 @@ def _():
     print(f'{current_user.username} connected')
 
 
+
 @sio.on('disconnect', namespace='/show_server')
 def _():
     print(current_user.username + ' left the show_server_room')
     leave_room('show_server_room')
     SHOW_SERVER_ROOM_USERS.remove(current_user.username)
     print(SHOW_SERVER_ROOM_USERS)
+    emit('connected_users_count', {'users_count': len(SHOW_SERVER_ROOM_USERS)}, to='show_server_room', broadcast=True)
+
 
 
 @sio.on('join', namespace='/show_server')
@@ -35,6 +38,8 @@ def _():
         print(f"{current_user.username} joined show_server_room")
         USERS_WHO_JUST_JOINED.append(current_user.username)
         emit('joined', {'username': current_user.username}, to='show_server_room', include_self=False)
+
+    emit('connected_users_count', {'users_count': len(SHOW_SERVER_ROOM_USERS)}, to='show_server_room', broadcast=True)
 
 
         
