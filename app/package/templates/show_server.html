@@ -24,6 +24,7 @@
 
 <section id="live_chat">
     <div class="container mt-4">
+        <h1 class="text-center">{{server.name}}</h1>
         <h1 class="text-center">Chat (TEST)</h1>
         <h5 class="text-center" id="active_users_count">CONNECTED USERS: </h5>
         <div id="msg_container">
@@ -40,13 +41,14 @@
 <section id="rooms">
     <div class="container-fluid mt-4">
         <h1 class="text-center">TABLES</h1>
-        <div class="container">
+        <div class="container" id="tables-container">
             <div class="row text-center">
                 <div class="round">
                     <div class="round-text">
                         TABLE 1
                         <br>
-                        <a href="{{ url_for('show_room', server_id=1, room_id=1) }}">JOIN</a>
+                        <!-- <a href="{{ url_for('show_room', server_id=1, room_id=1) }}">JOIN</a> -->
+                        <button data-link="{{ url_for('show_room', server_id=1, room_id=1) }}" class="join-table"><span>JOIN</span></button>
                     </div>
                 </div>
                 <div class="round ms-5">
@@ -89,6 +91,7 @@
         </div>
     </div>
 </section>
+<div class="container mt-3" id="user-table-container"></div>
 
 
 <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>

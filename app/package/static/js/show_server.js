@@ -55,3 +55,41 @@ function checkKey(e){
         msg_input.value = '';
     }
 }
+
+
+$(document).ready(function() {
+    $('#user-table-container').empty();
+
+    $('.join-table').click(function(){
+        let link = $(this).data('link')
+        let iframe_html = `
+        <div class="d-flex flex-row-reverse">
+        <button class="btn btn-danger close-table">X</button>
+        <button class="btn btn-warning close-table">- (not working) </button>
+
+        </div>
+        <iframe src="` + link + `" width="100%" height="600"></iframe>
+        `
+
+        let clicked_button = $(this)
+
+        $(clicked_button, "span").text("Joining...")
+        setTimeout(function() {
+            $('#rooms').hide()
+            $('#user-table-container').html(iframe_html);
+            $('#user-table-container').show();
+            $(clicked_button, "span").text("JOIN")
+
+            $('.close-table').click(function(){
+                $('#user-table-container').empty();
+                $('#rooms').show()
+            })
+
+        }, 3000)
+
+
+
+    })
+
+
+});
