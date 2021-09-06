@@ -1,13 +1,21 @@
-{% extends 'layout.html' %}
-{% block page_css %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{{url_for('static', filename='styles/show_room.css')}}">
-{% endblock page_css %}
+</head>
+<body>
+    <div class="videos">
+    </div> 
 
-{% block content %}
-<div class="videos">
 
-</div> 
     <h1 class="text-center">{{room.name}}</h1>
+
     <hr>
     <div class="container-fluid">
         <h1 class="text-center">Chat (Not Working)</h1>
@@ -29,8 +37,10 @@
             </button>
         </div>
         <div id="" class="form-text text-center">
-          Some Text Here
+            Some Text Here
         </div>
-        
     </div>
-{% endblock content %}
+    
+    <script src="{{ url_for('static', filename='js/show_room.js') }}"></script>
+</body>
+</html>

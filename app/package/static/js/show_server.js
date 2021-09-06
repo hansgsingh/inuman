@@ -57,39 +57,114 @@ function checkKey(e){
 }
 
 
+
+
+
+
+// HIDE DJ
+$('#hide-show-dj').hide()
+$('#dj-iframe').on('load', ()=>{
+    $('#hide-show-dj').show()
+})
+$('#hide-show-dj').click(function() {
+    if($('#dj-iframe').is(":visible")) {
+        $('#dj-iframe').hide(400)
+        $('#hide-show-dj-button').html('&#8595;')
+
+    } else {
+        $('#hide-show-dj-button').html('&#8593;')
+        $('#dj-iframe').show(400)
+        
+
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// JOIN TABLE
 $(document).ready(function() {
     $('#user-table-container').empty();
 
     $('.join-table').click(function(){
         let link = $(this).data('link')
+        // iframe  buttons
+
         let iframe_html = `
-        <div class="d-flex flex-row-reverse">
-        <button class="btn btn-danger close-table">X</button>
-        <button class="btn btn-warning close-table">- (not working) </button>
+        <div class="text-center">
+        <button class="btn btn-warning minimize-table mb-2" style="width: 38px;border-radius: 60px">-</button>
+        <button class="btn btn-danger close-table mb-2" style="width: 38px;border-radius: 60px">X</button>
 
         </div>
-        <iframe src="` + link + `" width="100%" height="600"></iframe>
+        <iframe id="show-table-iframe" src="` + link + `" width="100%" height="1000"></iframe>
         `
 
         let clicked_button = $(this)
 
         $(clicked_button, "span").text("Joining...")
-        setTimeout(function() {
-            $('#rooms').hide()
+        $(clicked_button, "span").attr("disabled", "disabled")
+
+
+        $('#user-table-container').hide();
+        $('#user-table-container').html(iframe_html);
+
+        // WAIT FOR IFRAME TO LOAD BEFORE SHOWING
+        $('#show-table-iframe').on('load',()=>{
+            $('#rooms').hide(300)
             $('#user-table-container').html(iframe_html);
             $('#user-table-container').show();
+
+            // scroll to user-table-container
+            
+            setTimeout(function() {
+                $([document.documentElement, document.body]).animate({
+                    scrollTop: $("#user-table-container").offset().top
+                }, 500);
+            }, 300)
+
             $(clicked_button, "span").text("JOIN")
+            $(clicked_button, "span").removeAttr("disabled")
 
             $('.close-table').click(function(){
-                $('#user-table-container').empty();
-                $('#rooms').show()
+                $('#user-table-container').children().fadeOut(400).promise().then(function() {
+                    $('#user-table-container').empty();
+                    $('#rooms').show(400)
+                    $([document.documentElement, document.body]).animate({
+                        scrollTop: $("#rooms").offset().top
+                    }, 500);
+                });
+                
             })
 
-        }, 3000)
-
-
-
+        })
     })
+
+    
 
 
 });
+//END JOIN TABLE

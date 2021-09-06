@@ -41,6 +41,16 @@ body, html {
     color:white;
 }
 
+#hide-show-dj {
+    height: 5vh;
+    border-radius: 10px;
+    background-color: grey;
+    cursor: pointer;
+    color: white;
+    font-size: 40px;
+    display: hidden;
+}
+
 #rooms {
     color: white;
 }
