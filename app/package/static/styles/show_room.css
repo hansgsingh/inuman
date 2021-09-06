@@ -4,21 +4,10 @@ body, html {
     color: white;
 }
 
-/* The hero image */
-.videos {
-    /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
-    background-image:url("/static/images/table_room.jpg");
-  
-    /* Set a specific height */
+#videos-container{
     height: 60%;
-  
-    /* Position and center the image to scale nicely on all screens */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    position: relative;
-  }
-  
+    width: 100%;
+}
 
 #table-name {
     font-family: 'Yeseva One', cursive;
@@ -28,8 +17,6 @@ body, html {
 
 #table-chat-title {
     font-family: 'Josefin Sans', sans-serif;
-
-
     
 }
 
@@ -41,3 +28,26 @@ body, html {
     font-style:normal;
 
 }
+
+
+#play-game-button {
+    color: white;
+    border-radius: 8px;
+    background: black;
+    border: 1px solid white;
+    font-family: 'Josefin Sans', sans-serif;
+
+}
+
+#play-game-button:hover {
+    background-color: white;
+    color: black
+}
+
+
+
+
+
+
+
+

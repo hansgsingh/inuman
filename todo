@@ -2,7 +2,7 @@ register
 create server
 create room 
 
-show_room chat app
+show_room chat app (done)
 join table 
 whisper
 video call

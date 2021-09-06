@@ -64,3 +64,17 @@ function checkKey(e){
         msg_input.value = '';
     }
 }
+
+$(document).ready(function() {
+    $('#play-game-button').click(function() {
+        if($('#video-image').attr('src') === '/static/images/table_room.jpg') {
+            $('#video-image').attr('src', '/static/images/poker-game.png')
+            $(this).text('Back')
+        }
+        else {
+            $('#video-image').attr('src', '/static/images/table_room.jpg')
+            $(this).text('Play a Game')
+
+        }
+    })
+})
