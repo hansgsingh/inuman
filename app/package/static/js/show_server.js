@@ -57,26 +57,47 @@ function checkKey(e){
 }
 
 
+$(document).ready(function() {
+    // HIDE DJ
+    $('#hide-show-dj').hide()
+    $('#dj-iframe').on('load', ()=>{
+        $('#hide-show-dj').show()
+    })
+    $('#hide-show-dj').click(function() {
+        if($('#dj-iframe').is(":visible")) {
+            $('#dj-iframe').hide(400)
+            $('#hide-show-dj-button').html('&#8595;')
+
+        } else {
+            $('#hide-show-dj-button').html('&#8593;')
+            $('#dj-iframe').show(400)
+            
+
+        }
+    })
+
+
+
+    $(".round").on({
+        mouseenter: function () {
+            //stuff to do on mouse enter
+            $(this).css('transform', 'scale(1.5)');
+            $(this).dimBackground();
+        },
+        mouseleave: function () {
+            $(this).css('transform', 'scale(1.0)');
+            $.undim();
+
+        }
+    });
 
 
 
 
-// HIDE DJ
-$('#hide-show-dj').hide()
-$('#dj-iframe').on('load', ()=>{
-    $('#hide-show-dj').show()
-})
-$('#hide-show-dj').click(function() {
-    if($('#dj-iframe').is(":visible")) {
-        $('#dj-iframe').hide(400)
-        $('#hide-show-dj-button').html('&#8595;')
 
-    } else {
-        $('#hide-show-dj-button').html('&#8593;')
-        $('#dj-iframe').show(400)
-        
 
-    }
+
+
 })
 
 

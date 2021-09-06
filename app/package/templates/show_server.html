@@ -1,4 +1,7 @@
 {% extends 'layout.html' %}
+{% block scripts %}
+    <script type="text/javascript" src="https://andywer.github.io/jquery-dim-background/jquery.dim-background.min.js"></script>
+{% endblock scripts %}
 {% block page_css %}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/show_server.css') }}">
 {% endblock page_css %}
@@ -42,7 +45,6 @@
 </section>
 
 <section id="rooms">
-    <div class="container-fluid mt-4">
         <h1 class="text-center">TABLES</h1>
         <div class="container" id="tables-container">
             <div class="row text-center">
@@ -54,45 +56,8 @@
                         <button data-link="{{ url_for('show_room', server_id=1, room_id=1) }}" class="btn join-table"><span>JOIN</span></button>
                     </div>
                 </div>
-                <div class="round ms-5">
-                    <div class="round-text">TABLE 2</div>
-                </div>
-                <div class="round ms-5">
-                    <div class="round-text">TABLE 3</div>
-                </div>
-                <div class="round ms-5">
-                    <div class="round-text">TABLE 4</div>
-                </div>
-                <div class="round ms-5">
-                    <div class="round-text">TABLE 5</div>
-                </div>
-                <div class="round ms-5">
-                    <div class="round-text">TABLE 6</div>
-                </div>
-            </div>
-
-            <div class="row text-center mt-4">
-                <div class="round">
-                    <div class="round-text">TABLE 1</div>
-                </div>
-                <div class="round ms-5">
-                    <div class="round-text">TABLE 2</div>
-                </div>
-                <div class="round ms-5">
-                    <div class="round-text">TABLE 3</div>
-                </div>
-                <div class="round ms-5">
-                    <div class="round-text">TABLE 4</div>
-                </div>
-                <div class="round ms-5">
-                    <div class="round-text">TABLE 5</div>
-                </div>
-                <div class="round ms-5">
-                    <div class="round-text">TABLE 6</div>
-                </div>
             </div>
         </div>
-    </div>
 </section>
 <div class="container-fluid mt-3" id="user-table-container"></div>
 
