@@ -19,4 +19,25 @@ body, html {
     position: relative;
   }
   
-  /* Place text in the middle of the image */
+
+#table-name {
+    font-family: 'Yeseva One', cursive;
+
+
+}
+
+#table-chat-title {
+    font-family: 'Josefin Sans', sans-serif;
+
+
+    
+}
+
+
+#active-users-count {
+    font-family: 'Josefin Sans', sans-serif;
+
+    font-size: 15px;
+    font-style:normal;
+
+}

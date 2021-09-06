@@ -5,42 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="{{url_for('static', filename='styles/show_room.css')}}">
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&family=Montserrat:wght@200&family=Yeseva+One&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="videos">
     </div> 
 
 
-    <h1 class="text-center">{{room.name}}</h1>
+    <h1 class="text-center" id="table-name">{{room.name}}</h1>
 
-    <hr>
-    <div class="container-fluid">
-        <h1 class="text-center">Chat (Not Working)</h1>
-        <div id="msg_container">
-            <div class="d-flex flex-row">
-                <p>User 1: Hello World!</p>
+    <section id="live_chat">
+        <div class="container mt-4">
+            <h1 class="text-center" id="table-chat-title">TABLE Chat (TEST)</h1>
+            <h5 class="text-center" id="active-users-count">CONNECTED USERS: </h5>
+            <div id="msg_container">
             </div>
-            <div class="d-flex flex-row">
-                <p>User 2: Hello!</p>
-            </div>
-            <div class="d-flex flex-row-reverse">
-                <p>You: Hi :)</p>
+            <div class="d-flex">
+                <input type="text" class="form-control" id='msg' onkeyup="checkKey(event)">
+                <button class="btn btn-primary">
+                    Send
+                </button>
             </div>
         </div>
-        <div class="d-flex">
-            <input type="text" class="form-control">
-            <button class="btn btn-primary">
-                Send
-            </button>
-        </div>
-        <div id="" class="form-text text-center">
-            Some Text Here
-        </div>
-    </div>
+    </section>
     
+    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/show_room.js') }}"></script>
 </body>
 </html>
