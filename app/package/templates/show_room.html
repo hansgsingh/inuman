@@ -21,8 +21,14 @@
 </head>
 <body>
 
-    <div class="container" id="videos-container">
-        <img src="/static/images/table_room.jpg" id="video-image" height="600px" width="100%">
+    <div class="container">
+        <div class="row" id="videos-container">
+            {% for user in room.clients %}
+            <div class="col-lg-4" id="user-{{user.id}}-video-image">
+                <img src="{{url_for('static', filename='images/' + current_user.image_file) }}" height="400px" width="100%">
+            </div>
+            {% endfor %}
+        </div>
     </div>
 
     <div class="text-center">

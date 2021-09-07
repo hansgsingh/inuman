@@ -3,8 +3,7 @@ create server
 create room 
 
 show_room chat app (done)
-join table 
+join table (done)
 whisper
 video call
 store messages in db?
-add socket_id to current_user

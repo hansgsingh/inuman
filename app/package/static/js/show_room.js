@@ -13,8 +13,6 @@ const room_id = paths[1]
 socket.on('connect', ()=>{
     console.log(socket.id + ' connected')
 
-
-
     socket.emit('join', {server_id: server_id, room_id: room_id})
     setTimeout(()=>{
         socket.emit('user_just_joined' )
@@ -29,6 +27,7 @@ socket.on('connected_users_count', (data)=>{
 
 
 socket.on('disconnected', (user) => {
+    $("#user-"+ user.id + "-video-image").remove()
     let msg_div = '<div class="d-flex justify-content-center">'
     let msg_p = '-------------- ' + user.username + '</b> left the room --------------'
     let msg_end_div = '</div>'
@@ -40,6 +39,8 @@ socket.on('disconnected', (user) => {
 
 socket.on('joined', (user)=>{
     console.log(user.username + ' connected')
+    
+
 
     let msg_div = '<div class="d-flex justify-content-center">'
     let msg_p = '-------------- ' + user.username + '</b> joined the room --------------'
@@ -48,6 +49,17 @@ socket.on('joined', (user)=>{
     let msg_html = msg_div + msg_p + msg_end_div
     msg_container.innerHTML += msg_html
 })
+
+
+socket.on('append_video_frame', (user) => {
+    let video_frame = `
+    <div class="col-lg-4" id="user-`+ user.id +`-video-image">
+    <img src="` + user.image_file + `"  height="400px" width="100%">
+    </div>
+    `;
+    $('#videos-container').append(video_frame)
+})
+
 
 socket.on('append_msg', (data) => {
     let msg_container = document.getElementById('msg_container')
