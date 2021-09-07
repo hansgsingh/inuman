@@ -119,8 +119,8 @@ $(document).ready(function() {
 
         let iframe_html = `
         <div class="text-center">
-        <button class="btn btn-warning minimize-table mb-2 mt-4" style="width: 38px;border-radius: 60px">-</button>
-        <button class="btn btn-danger close-table mb-2 mt-4" style="width: 38px;border-radius: 60px">X</button>
+        <button class="btn btn-warning minimize-table mb-2 mt-4" style="width: auto;border-radius: 60px">-</button>
+        <button class="btn btn-danger close-table mb-2 mt-4" style="width: auto;border-radius: 60px">X</button>
 
         </div>
         <iframe id="show-table-iframe" src="` + link + `"  width="100%" height="1500px" ></iframe>
@@ -161,20 +161,68 @@ $(document).ready(function() {
 
             $('.close-table').click(function(){
 
-                $('#rooms').fadeIn(1000)
-                $('#live_chat').fadeIn(1000)
+                $('#rooms').fadeIn(1200)
+                $('#live_chat').fadeIn(1200)
 
 
-                $('#user-table-container').children().fadeOut(800).promise().then(function() {
+                $('#user-table-container').children().fadeOut(600).promise().then(function() {
                     $('#user-table-container').empty();
                     $([document.documentElement, document.body]).animate({
-                        scrollTop: $("#live-chat").offset().top
-                    }, 700);
+                        scrollTop: $("#live_chat").offset().top
+                    }, 300);
 
 
                 })
                 
             })
+            $('.minimize-table').click(function(){
+
+                if($(this).text() == '-') {
+                    $('#rooms').fadeIn(1200)
+                    $('#live_chat').fadeIn(1200)
+                    let minimize_button = $(this)
+
+                    $('#show-table-iframe').fadeOut(600).promise().then(function() {
+                        $([document.documentElement, document.body]).animate({
+                            scrollTop: $("#live_chat").offset().top
+                        }, 300);
+                        $(minimize_button).text('SHOW TABLE')
+                        $(minimize_button).css('position', 'fixed')
+                        $(minimize_button).css('top', '0%')
+                        $(minimize_button).css('right', '9.5%')
+
+                        $('.close-table').text('LEAVE TABLE')
+                        $('.close-table').css('position', 'fixed')
+                        $('.close-table').css('top', '0%')
+                        $('.close-table').css('right', '3%')
+
+
+                    })
+                } else {
+                    $('#rooms').fadeOut(600)
+                    $('#live_chat').fadeOut(600)
+                    let minimize_button = $(this)
+                    $(minimize_button).text('-')
+                    $(minimize_button).css('position', '')
+                    $(minimize_button).css('top', '')
+                    $(minimize_button).css('right', '')
+
+                    $('.close-table').text('X')
+                    $('.close-table').css('position', '')
+                    $('.close-table').css('top', '')
+                    $('.close-table').css('right', '')
+
+                    $('#show-table-iframe').fadeIn(1200).promise().then(function() {
+
+                        $([document.documentElement, document.body]).animate({
+                            scrollTop: $("#user-table-container").offset().top
+                        }, 300);
+
+                    })
+                }
+                
+            })
+
 
         })
     })
