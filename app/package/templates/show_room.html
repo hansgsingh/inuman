@@ -25,7 +25,7 @@
         <div class="row" id="videos-container">
             {% for user in room.clients %}
             <div class="col-lg-4" id="user-{{user.id}}-video-image">
-                <img src="{{url_for('static', filename='images/' + current_user.image_file) }}" height="300px" width="100%">
+                <img src="{{url_for('static', filename='images/' + user.image_file) }}" height="300px" width="100%">
             </div>
             {% endfor %}
         </div>
