@@ -27,11 +27,13 @@ def show_server(server_id):
     return render_template('show_server.html', server=server)
 
 @app.route('/<int:server_id>/<int:room_id>')
+@login_required
 def show_room(server_id, room_id):
     room = AppServerRoom.query.get(room_id)
     return render_template('show_room.html', room=room)
 
 @app.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))

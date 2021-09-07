@@ -83,7 +83,6 @@ def _():
 
 @sio.on('disconnect', namespace='/show_room')
 def _():
-    
     if current_user.server_id != None and current_user.room_id != None:
         # SET CURRENT USER ROOM TO NONE
         room = AppServerRoom.query.get(current_user.room_id)
