@@ -1,3 +1,4 @@
+from flask.json import jsonify
 from package import sio
 from flask_login import current_user
 from flask_socketio import emit, join_room, leave_room
@@ -34,6 +35,15 @@ def _(data):
 def _():
     server = AppServer.query.get(current_user.server_id)
     server_room_name = f'Server{server.id}'
+    
+    
+    # if current user is in table, disconnect
+    if current_user.room_id != None:
+        room = AppServerRoom.query.get(current_user.room_id)
+        leave_room(f'Table{room.id}')
+        current_user.room_id = None
+        db.session.commit()
+        emit('update_table_users_count', {'room_id': room.id, 'table_users_count': len(room.clients)}, namespace='/show_server', to=server_room_name, broadcast=True)
 
     print(current_user.username + ' left Server' + str(server.id))
     leave_room(f'Server{server.id}')
@@ -43,7 +53,6 @@ def _():
 
 
     emit('connected_users_count', {'users_count': len(server.clients)}, to=server_room_name, broadcast=True)
-
 
     emit('update_server_user_count', {'server_id': server.id, 'server_users_count': len(server.clients)}, namespace='/index', broadcast=True)
 
@@ -74,27 +83,26 @@ def _():
 
 @sio.on('disconnect', namespace='/show_room')
 def _():
-
-    # SET CURRENT USER ROOM TO NONE
-    room = AppServerRoom.query.get(current_user.room_id)
-
-    print(current_user.username + ' left the Table'+ str(room.id))
     
-    server = AppServer.query.get(current_user.server_id)
-    server_room_name = f'Server{server.id}'
+    if current_user.server_id != None and current_user.room_id != None:
+        # SET CURRENT USER ROOM TO NONE
+        room = AppServerRoom.query.get(current_user.room_id)
+        print(current_user.username + ' left the Table'+ str(room.id))
+        server = AppServer.query.get(current_user.server_id)
+        server_room_name = f'Server{server.id}'
 
-    current_user.room_id = None
-    db.session.commit()
+        current_user.room_id = None
+        db.session.commit()
 
-    print(current_user)
-    leave_room(f'Table{room.id}')
+        print(current_user)
+        leave_room(f'Table{room.id}')
 
 
-    emit('connected_users_count', {'users_count': len(room.clients)}, to=f'Table{room.id}', broadcast=True)
-    emit('disconnected', {'username': current_user.username}, include_self=True, to=f'Table{room.id}', broadcast=True)
+        emit('connected_users_count', {'users_count': len(room.clients)}, to=f'Table{room.id}', broadcast=True)
+        emit('disconnected', {'username': current_user.username}, include_self=True, to=f'Table{room.id}', broadcast=True)
 
-    # update table users count on /show_server nsp
-    emit('update_table_users_count', {'room_id': room.id, 'table_users_count': len(room.clients)}, namespace='/show_server', to=server_room_name, broadcast=True)
+        # update table users count on /show_server nsp
+        emit('update_table_users_count', {'room_id': room.id, 'table_users_count': len(room.clients)}, namespace='/show_server', to=server_room_name, broadcast=True)
 
 
 
