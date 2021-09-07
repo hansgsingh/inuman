@@ -54,7 +54,7 @@ socket.on('joined', (user)=>{
 socket.on('append_video_frame', (user) => {
     let video_frame = `
     <div class="col-lg-4" id="user-`+ user.id +`-video-image">
-    <img src="` + user.image_file + `"  height="400px" width="100%">
+    <img src="` + user.image_file + `"  height="300px" width="100%">
     </div>
     `;
     $('#videos-container').append(video_frame)

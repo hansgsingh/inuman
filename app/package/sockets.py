@@ -44,6 +44,10 @@ def _():
         current_user.room_id = None
         db.session.commit()
         emit('update_table_users_count', {'room_id': room.id, 'table_users_count': len(room.clients)}, namespace='/show_server', to=server_room_name, broadcast=True)
+        emit('disconnected', {'id': current_user.id, 'username': current_user.username}, include_self=True, to=f'Table{room.id}', namespace='/show_room', broadcast=True)
+        emit('connected_users_count', {'users_count': len(room.clients)}, to=f'Table{room.id}', namespace='/show_room', broadcast=True)
+
+
 
     print(current_user.username + ' left Server' + str(server.id))
     leave_room(f'Server{server.id}')
