@@ -36,7 +36,7 @@
         <div id="msg_container">
         </div>
         <div class="d-flex">
-            <input type="text" class="form-control" id='msg' onkeyup="checkKey(event)">
+            <input type="text" class="form-control" id='msg' placeholder="Message..." onkeyup="checkKey(event)">
             <button class="btn btn-primary">
                 Send
             </button>
@@ -46,7 +46,7 @@
 
 <section id="rooms">
         <h1 class="text-center mt-4">TABLES</h1>
-        <div class="container" id="tables-container">
+        <div class="container mb-4" id="tables-container">
             <div class="row text-center">
                 {% for room in server.rooms %}
                     <div class="round ms-5 mt-2">
@@ -65,8 +65,13 @@
             
         </div>
 </section>
-<div class="container-fluid mt-3" id="user-table-container"></div>
 
+<section>
+    <div class="container-fluid">
+        <div id="user-table-container"></div>
+
+    </div>
+</section>
 
 <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
 <script src="{{ url_for('static', filename='js/show_server.js') }}"></script>

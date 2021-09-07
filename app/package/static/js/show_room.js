@@ -52,24 +52,29 @@ socket.on('joined', (user)=>{
 
 
 socket.on('append_video_frame', (user) => {
-    let video_frame = `
+
+    var video_frame = $(`
     <div class="col-lg-4" id="user-`+ user.id +`-video-image">
     <img src="` + user.image_file + `"  height="300px" width="100%">
     </div>
-    `;
+    `).hide();
     $('#videos-frame-container').append(video_frame)
+    video_frame.slideDown();
+    
 })
 
 
 socket.on('append_msg', (data) => {
     let msg_container = document.getElementById('msg_container')
 
-    let msg_div = '<div class="d-flex flex-row">'
+    let msg_div = '<div class="">'
     let msg_p = '<p><b>' + data.username + '</b>: ' + data.msg + '</p>'
     let msg_end_div = '</div>'
     
     let msg_html = msg_div + msg_p + msg_end_div
-    msg_container.innerHTML += msg_html
+    // msg_container.innerHTML += msg_html
+
+    $('#msg_container').prepend(msg_html)
 })
 
 
@@ -84,7 +89,9 @@ function checkKey(e){
         let msg_end_div = '</div>'
         
         let msg_html = msg_div + msg_p + msg_end_div
-        msg_container.innerHTML += msg_html
+        $('#msg_container').prepend(msg_html)
+
+
         socket.emit('new_msg', {room_id: room_id, msg: msg_input.value})
         msg_input.value = '';
     }
@@ -94,15 +101,15 @@ $(document).ready(function() {
     $('#play-game-button').click(function() {
         if($(this).text() == 'Play a Game') {
             $('#videos-frame-container').css('transform', 'scale(0.5)')
+
             let play_game_img = $(`
             <div class="row" id="play-game-image">
                 <img src="/static/images/poker-game.png" width="100%" height="600px" alt="">
             </div>
             `).hide()
     
-            $('#videos-main-container').append(play_game_img)
+            $('#game-container').prepend(play_game_img)
             play_game_img.show(400)
-    
             $(this).text('Quit')
         }
         else {

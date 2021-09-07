@@ -34,8 +34,9 @@ socket.on('append_msg', (data) => {
     let msg_p = '<p><b>' + data.username + '</b>: ' + data.msg + '</p>'
     let msg_end_div = '</div>'
     
-    let msg_html = msg_div + msg_p + msg_end_div
-    msg_container.innerHTML += msg_html
+    const msg_html = msg_div + msg_p + msg_end_div
+    $('#msg_container').prepend(msg_html)
+
 })
 
 socket.on('update_table_users_count', (data) => {
@@ -57,7 +58,8 @@ function checkKey(e){
         let msg_end_div = '</div>'
         
         let msg_html = msg_div + msg_p + msg_end_div
-        msg_container.innerHTML += msg_html
+        $('#msg_container').prepend(msg_html)
+
         socket.emit('new_msg', {msg: msg_input.value, server_id: server_id})
         msg_input.value = '';
     }
@@ -117,15 +119,15 @@ $(document).ready(function() {
 
         let iframe_html = `
         <div class="text-center">
-        <button class="btn btn-warning minimize-table mb-2" style="width: 38px;border-radius: 60px">-</button>
-        <button class="btn btn-danger close-table mb-2" style="width: 38px;border-radius: 60px">X</button>
+        <button class="btn btn-warning minimize-table mb-2 mt-4" style="width: 38px;border-radius: 60px">-</button>
+        <button class="btn btn-danger close-table mb-2 mt-4" style="width: 38px;border-radius: 60px">X</button>
 
         </div>
-        <iframe id="show-table-iframe" src="` + link + `" width="100%" height="1000"></iframe>
+        <iframe id="show-table-iframe" src="` + link + `"  width="100%" height="1500px" ></iframe>
         `
 
         // 
-        socket.emit('join_room', )
+        socket.emit('join_room')
 
         let clicked_button = $(this)
 
@@ -139,9 +141,10 @@ $(document).ready(function() {
 
         // WAIT FOR IFRAME TO LOAD BEFORE SHOWING
         $('#show-table-iframe').on('load',()=>{
-            $('#rooms').hide(300)
+            $('#rooms').fadeOut(200)
+            $('#live_chat').fadeOut(200)
             $('#user-table-container').html(iframe_html);
-            $('#user-table-container').show();
+            $('#user-table-container').fadeIn(300);
 
 
             // scroll to user-table-container
@@ -150,19 +153,26 @@ $(document).ready(function() {
                 $([document.documentElement, document.body]).animate({
                     scrollTop: $("#user-table-container").offset().top
                 }, 500);
+
             }, 300)
 
             $(clicked_button, "span").text("JOIN")
             $(clicked_button, "span").removeAttr("disabled")
 
             $('.close-table').click(function(){
-                $('#user-table-container').children().fadeOut(400).promise().then(function() {
+
+                $('#rooms').fadeIn(1000)
+                $('#live_chat').fadeIn(1000)
+
+
+                $('#user-table-container').children().fadeOut(800).promise().then(function() {
                     $('#user-table-container').empty();
-                    $('#rooms').show(400)
                     $([document.documentElement, document.body]).animate({
-                        scrollTop: $("#rooms").offset().top
-                    }, 500);
-                });
+                        scrollTop: $("#live-chat").offset().top
+                    }, 700);
+
+
+                })
                 
             })
 

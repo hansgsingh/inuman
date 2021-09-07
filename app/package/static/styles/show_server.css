@@ -75,6 +75,7 @@ body, html {
 #rooms {
     color: white;
     font-family: 'Josefin Sans', sans-serif;
+    height: 50vh;
 
 
 }
@@ -114,4 +115,16 @@ body, html {
 .round-text a {
     text-decoration: none;
     color: pink;
+}
+
+
+
+#msg_container {
+    height: 250px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    background-color: #1F2833;
+    border-radius: 10px;
+    padding: 12px;
 }
