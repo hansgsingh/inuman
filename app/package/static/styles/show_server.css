@@ -101,9 +101,14 @@ body, html {
 }
 
 .round-text {
-    margin-top: 30%;
+    margin-top: 15%;
     font-size: 25px;
 
+}
+
+.round-text small {
+    font-size: 15px;
+    display:block;
 }
 
 .round-text a {

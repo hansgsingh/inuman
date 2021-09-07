@@ -4,9 +4,7 @@ socket.on('connect', ()=>{
     console.log(socket.id + ' connected')
 
     socket.emit('join')
-    setTimeout(()=>{
-        socket.emit('user_just_joined')
-    }, 120000)
+
 })
 
 socket.on('connected_users_count', (data)=>{
@@ -16,16 +14,6 @@ socket.on('connected_users_count', (data)=>{
 
 
 
-socket.on('joined', (user)=>{
-    console.log(user.username + ' connected')
-
-    let msg_div = '<div class="d-flex justify-content-center">'
-    let msg_p = '-------------- ' + user.username + '</b> joined the room --------------'
-    let msg_end_div = '</div>'
-    
-    let msg_html = msg_div + msg_p + msg_end_div
-    msg_container.innerHTML += msg_html
-})
 
 socket.on('append_msg', (data) => {
     let msg_container = document.getElementById('msg_container')
@@ -36,6 +24,10 @@ socket.on('append_msg', (data) => {
     
     let msg_html = msg_div + msg_p + msg_end_div
     msg_container.innerHTML += msg_html
+})
+
+socket.on('update_table_users_count', (data) => {
+    $('#table-'+ data.room_id + '-users-count').html('users: ' + data.table_users_count);
 })
 
 
@@ -92,34 +84,7 @@ $(document).ready(function() {
     });
 
 
-
-
-
-
-
-
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -144,6 +109,9 @@ $(document).ready(function() {
         <iframe id="show-table-iframe" src="` + link + `" width="100%" height="1000"></iframe>
         `
 
+        // 
+        socket.emit('join_room', )
+
         let clicked_button = $(this)
 
         $(clicked_button, "span").text("Joining...")
@@ -152,12 +120,14 @@ $(document).ready(function() {
 
         $('#user-table-container').hide();
         $('#user-table-container').html(iframe_html);
+        $.undim();
 
         // WAIT FOR IFRAME TO LOAD BEFORE SHOWING
         $('#show-table-iframe').on('load',()=>{
             $('#rooms').hide(300)
             $('#user-table-container').html(iframe_html);
             $('#user-table-container').show();
+
 
             // scroll to user-table-container
             
@@ -183,8 +153,6 @@ $(document).ready(function() {
 
         })
     })
-
-    
 
 
 });
