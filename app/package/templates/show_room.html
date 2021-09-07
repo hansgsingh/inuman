@@ -21,8 +21,8 @@
 </head>
 <body>
 
-    <div class="container">
-        <div class="row" id="videos-container">
+    <div class="container" id="videos-main-container">
+        <div class="row" id="videos-frame-container">
             {% for user in room.clients %}
             <div class="col-lg-4" id="user-{{user.id}}-video-image">
                 <img src="{{url_for('static', filename='images/' + user.image_file) }}" height="300px" width="100%">
@@ -30,6 +30,7 @@
             {% endfor %}
         </div>
     </div>
+
 
     <div class="text-center">
         <button class="btn mt-2" id="play-game-button">Play a Game</button>

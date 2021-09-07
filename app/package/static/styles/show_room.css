@@ -4,9 +4,10 @@ body, html {
     color: white;
 }
 
-#videos-container{
+#videos-frame-container{
     height: 60%;
     width: 100%;
+    transition: 0.5s;
 }
 
 #table-name {

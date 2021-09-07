@@ -57,7 +57,7 @@ socket.on('append_video_frame', (user) => {
     <img src="` + user.image_file + `"  height="300px" width="100%">
     </div>
     `;
-    $('#videos-container').append(video_frame)
+    $('#videos-frame-container').append(video_frame)
 })
 
 
@@ -92,14 +92,27 @@ function checkKey(e){
 
 $(document).ready(function() {
     $('#play-game-button').click(function() {
-        if($('#video-image').attr('src') === '/static/images/table_room.jpg') {
-            $('#video-image').attr('src', '/static/images/poker-game.png')
-            $(this).text('Back')
+        if($(this).text() == 'Play a Game') {
+            $('#videos-frame-container').css('transform', 'scale(0.5)')
+            let play_game_img = $(`
+            <div class="row" id="play-game-image">
+                <img src="/static/images/poker-game.png" width="100%" height="600px" alt="">
+            </div>
+            `).hide()
+    
+            $('#videos-main-container').append(play_game_img)
+            play_game_img.show(400)
+    
+            $(this).text('Quit')
         }
         else {
-            $('#video-image').attr('src', '/static/images/table_room.jpg')
-            $(this).text('Play a Game')
+            $('#play-game-image').hide(400, () => {
+                $('#play-game-image').remove()
+                $(this).text('Play a Game')
+                $('#videos-frame-container').css('transform', 'scale(1)');
+
+            })
 
         }
-    })
+    }) 
 })
