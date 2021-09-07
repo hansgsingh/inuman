@@ -11,6 +11,7 @@ const server_id = paths[0]
 
 
 
+
 socket.on('connect', ()=>{
     console.log(socket.id + ' connected')
 
@@ -24,6 +25,7 @@ socket.on('connected_users_count', (data)=>{
     let users_count_element = document.getElementById('active-users-count')
     users_count_element.innerHTML = 'CONNECTED USERS: ' + data.users_count
 })
+
 
 
 
@@ -46,12 +48,10 @@ socket.on('update_table_users_count', (data) => {
 
 
 
-
 function checkKey(e){
     var enterKey = 13;
     if (e.which == enterKey){
         let msg_input = document.getElementById('msg')
-        let msg_container = document.getElementById('msg_container')
 
         let msg_div = '<div class="d-flex flex-row-reverse">'
         let msg_p = '<p><b>You<b>: ' + msg_input.value + '</p>'
@@ -66,8 +66,8 @@ function checkKey(e){
 }
 
 
+// HIDE DJ
 $(document).ready(function() {
-    // HIDE DJ
     $('#hide-show-dj').hide()
     $('#dj-iframe').on('load', ()=>{
         $('#hide-show-dj').show()
@@ -105,22 +105,23 @@ $(document).ready(function() {
 
 
 
-
-
-
-
 // JOIN TABLE
 $(document).ready(function() {
     $('#user-table-container').empty();
 
-    $('.join-table').click(function(){
-        let link = $(this).data('link')
-        // iframe  buttons
+    $(document).on('click', '.join-table', join_table);
 
+    function join_table(button) {
+        let link = $(this).data('link')
+
+
+
+        // iframe  buttons
         let iframe_html = `
         <div class="text-center">
         <button class="btn btn-warning minimize-table mb-2 mt-4" style="width: auto;border-radius: 60px">-</button>
         <button class="btn btn-danger close-table mb-2 mt-4" style="width: auto;border-radius: 60px">X</button>
+        <button class="btn btn-primary share-table mb-2 mt-4" style="width: auto;border-radius: 60px">SHARE TABLE LINK</button>
 
         </div>
         <iframe id="show-table-iframe" src="` + link + `"  width="100%" height="1500px" ></iframe>
@@ -156,8 +157,18 @@ $(document).ready(function() {
 
             }, 300)
 
-            $(clicked_button, "span").text("JOIN")
-            $(clicked_button, "span").removeAttr("disabled")
+
+            // CHECK IF CLICKED BUTTON IS A JOIN_TABLE_LINK FROM CHAT 
+            var is_link = $(clicked_button).attr('is-link')
+            if (typeof is_link !== 'undefined' && is_link !== false) {
+                // ...
+                $(clicked_button, "span").text("Join my table")
+                $(clicked_button, "span").removeAttr("disabled")
+            } else {
+                $(clicked_button, "span").text("JOIN")
+                $(clicked_button, "span").removeAttr("disabled")
+            }
+
 
             $('.close-table').click(function(){
 
@@ -189,12 +200,16 @@ $(document).ready(function() {
                         $(minimize_button).text('SHOW TABLE')
                         $(minimize_button).css('position', 'fixed')
                         $(minimize_button).css('top', '0%')
-                        $(minimize_button).css('right', '9.5%')
-
+                        $(minimize_button).css('right', '29%')
+                        
                         $('.close-table').text('LEAVE TABLE')
                         $('.close-table').css('position', 'fixed')
                         $('.close-table').css('top', '0%')
-                        $('.close-table').css('right', '3%')
+                        $('.close-table').css('right', '21%')
+
+                        $('.share-table').css('position', 'fixed')
+                        $('.share-table').css('top', '0%')
+                        $('.share-table').css('right', '10.4%')
 
 
                     })
@@ -212,6 +227,10 @@ $(document).ready(function() {
                     $('.close-table').css('top', '')
                     $('.close-table').css('right', '')
 
+                    $('.share-table').css('position', '')
+                    $('.share-table').css('top', '')
+                    $('.share-table').css('right', '')
+
                     $('#show-table-iframe').fadeIn(1200).promise().then(function() {
 
                         $([document.documentElement, document.body]).animate({
@@ -222,10 +241,25 @@ $(document).ready(function() {
                 }
                 
             })
+            $('.share-table').click(function(){
+                let msg_container = document.getElementById('msg_container')
+
+                let msg_div = '<div class="d-flex flex-row-reverse">'
+                let msg_p = '<p><b>You</b>: <button class="btn join-table" disabled>Join my table </button></p>'
+                let msg_end_div = '</div>'
+                
+                const msg_html = msg_div + msg_p + msg_end_div
+                $('#msg_container').prepend(msg_html)
+
+                socket.emit('share_table_link')
+
+            })
 
 
         })
-    })
+    }
+
+
 
 
 });

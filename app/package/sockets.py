@@ -74,6 +74,17 @@ def _(data):
     emit('append_msg', {'username': current_user.username, 'msg': msg}, to=server_room_name, include_self=False)
 
 
+@sio.on('share_table_link', namespace='/show_server')
+def _():
+    server_room_name = f'Server{current_user.server.id}'
+    server_id = current_user.server.id
+    room_id = current_user.room.id
+
+
+    msg = f'<button class="btn join-table" is-link="true" data-link="/{server_id}/{room_id}"><span>Join my table</span></button>'
+    emit('append_msg', {'username': current_user.username, 'msg': msg}, to=server_room_name, include_self=False)
+
+
 
 
 # TABLE ROOM

@@ -33,7 +33,8 @@ socket.on('disconnected', (user) => {
     let msg_end_div = '</div>'
     
     let msg_html = msg_div + msg_p + msg_end_div
-    msg_container.innerHTML += msg_html
+    $('#msg_container').prepend(msg_html)
+
 })
 
 
@@ -47,7 +48,8 @@ socket.on('joined', (user)=>{
     let msg_end_div = '</div>'
     
     let msg_html = msg_div + msg_p + msg_end_div
-    msg_container.innerHTML += msg_html
+    $('#msg_container').prepend(msg_html)
+
 })
 
 
