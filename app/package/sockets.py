@@ -126,16 +126,16 @@ def _(data):
         print(f"{current_user.username} joined Table id: {room_id}")
         print(current_user)
     
-    user_img = '/static/images/' + current_user.image_file
-    
-    emit('joined', {'username': current_user.username}, to=f'Table{room.id}', broadcast=True, include_self=False)
-    emit('connected_users_count', {'users_count': len(room.clients)}, to=f'Table{room.id}', broadcast=True)
-    
-    
-    emit('append_video_frame', {'id': current_user.id, 'image_file': user_img}, to=f'Table{room.id}', broadcast=True, include_self=True)
+        user_img = '/static/images/' + current_user.image_file
+        
+        emit('joined', {'username': current_user.username}, to=f'Table{room.id}', broadcast=True, include_self=False)
+        emit('connected_users_count', {'users_count': len(room.clients)}, to=f'Table{room.id}', broadcast=True)
+        
+        
+        emit('append_video_frame', {'id': current_user.id, 'image_file': user_img}, to=f'Table{room.id}', broadcast=True, include_self=True)
 
-    # update table users count on /show_server nsp
-    emit('update_table_users_count', {'room_id': room.id, 'table_users_count': len(room.clients)}, namespace='/show_server', to=server_room_name, broadcast=True)
+        # update table users count on /show_server nsp
+        emit('update_table_users_count', {'room_id': room.id, 'table_users_count': len(room.clients)}, namespace='/show_server', to=server_room_name, broadcast=True)
 
 
 

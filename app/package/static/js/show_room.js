@@ -27,7 +27,7 @@ socket.on('connected_users_count', (data)=>{
 
 
 socket.on('disconnected', (user) => {
-    $("#user-"+ user.id + "-video-image").remove()
+    $("#user-" + user.id + "-video-image").remove()
     let msg_div = '<div class="d-flex justify-content-center">'
     let msg_p = '-------------- ' + user.username + '</b> left the room --------------'
     let msg_end_div = '</div>'
