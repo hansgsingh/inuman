@@ -47,7 +47,7 @@ class AppServer(db.Model):
 
 class AppServerRoom(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(20), unique=True, nullable=False)
+    name = db.Column(db.String(20), nullable=False)
 
     # A Room belongs to a Server
     server_id = db.Column(db.Integer, db.ForeignKey('app_server.id'), nullable=False)

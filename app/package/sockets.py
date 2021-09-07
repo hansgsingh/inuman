@@ -7,6 +7,7 @@ from package.models import AppServer, AppServerRoom, db
 
 # SERVER ROOM
 # SERVER ROOM = Server{server.id}
+
 @sio.on('connect', namespace='/show_server')
 def _():
     print(f'{current_user.username} connected to /show_server')
@@ -25,6 +26,8 @@ def _(data):
         print(f"{current_user.username} connected to Server{server.id}")
 
     emit('connected_users_count', {'users_count': len(server.clients)}, to=server_room_name, broadcast=True)
+    
+    emit('update_server_user_count', {'server_id': server.id, 'server_users_count': len(server.clients)}, namespace='/index', broadcast=True)
 
 
 @sio.on('disconnect', namespace='/show_server')
@@ -40,6 +43,9 @@ def _():
 
 
     emit('connected_users_count', {'users_count': len(server.clients)}, to=server_room_name, broadcast=True)
+
+
+    emit('update_server_user_count', {'server_id': server.id, 'server_users_count': len(server.clients)}, namespace='/index', broadcast=True)
 
 
 
