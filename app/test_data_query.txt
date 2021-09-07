@@ -1,6 +1,6 @@
-user1 = User(username='hanswi', email='hans@mail.com', password='password', room_id=1)
-user2 = User(username='audwi', email='aud@mail.com', password='password', room_id=1)
-user3 = User(username='john', email='john@mail.com', password='password', room_id=1)
+user1 = User(username='hanswi', email='hans@mail.com', password='password')
+user2 = User(username='audwi', email='aud@mail.com', password='password')
+user3 = User(username='john', email='john@mail.com', password='password')
 
 db.session.add(user1)
 db.session.add(user2)
@@ -15,6 +15,11 @@ db.session.commit()
 r1 = AppServerRoom(name='Table 1', server_id=1)
 db.session.add(r1)
 db.session.commit()
+
+r2 = AppServerRoom(name='Table 2', server_id=1)
+db.session.add(r2)
+db.session.commit()
+
 
 
 clients: [user.id for user in self.clients]

@@ -13,6 +13,9 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(100), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
+
+
+    server_id = db.Column(db.Integer, db.ForeignKey('app_server.id'), nullable=True)
     room_id = db.Column(db.Integer, db.ForeignKey('app_server_room.id'), nullable=True)
 
     def __repr__(self):
@@ -21,6 +24,7 @@ class User(db.Model, UserMixin):
         username: {self.username},
         email: {self.email},
         image_file: {self.image_file},
+        server_id: {self.server_id},
         room_id: {self.room_id}\n\n"""
 
 
@@ -31,6 +35,8 @@ class AppServer(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     rooms = db.relationship('AppServerRoom', backref='server', lazy=True)
+    clients = db.relationship('User', backref='server', lazy=True)
+
 
     def __repr__(self):
         return f"""[AppServer]

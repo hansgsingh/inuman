@@ -45,16 +45,15 @@
 </section>
 
 <section id="rooms">
-        <h1 class="text-center">TABLES</h1>
+        <h1 class="text-center mt-4">TABLES</h1>
         <div class="container" id="tables-container">
             <div class="row text-center">
                 {% for room in server.rooms %}
-                    <div class="round ms-4">
+                    <div class="round ms-5 mt-2">
 
                         <div class="round-text">
                             {{ room.name }}
                             <small class="room-users-count" id="table-{{room.id}}-users-count">users: {{room.clients|length}}</small>
-                            <!-- <a href="{{ url_for('show_room', server_id=1, room_id=1) }}">JOIN</a> -->
                             <button data-link="{{ url_for('show_room', server_id=server.id, room_id=room.id) }}" class="btn join-table"><span>JOIN</span></button>
                         </div>
                     </div>

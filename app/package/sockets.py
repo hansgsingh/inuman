@@ -1,54 +1,58 @@
 from package import sio
 from flask_login import current_user
 from flask_socketio import emit, join_room, leave_room
-from package.models import AppServerRoom, db
-
-
-SHOW_SERVER_ROOM_USERS = []
+from package.models import AppServer, AppServerRoom, db
 
 
 
-
-
+# SERVER ROOM
+# SERVER ROOM = Server{server.id}
 @sio.on('connect', namespace='/show_server')
 def _():
-    print(f'{current_user.username} connected')
+    print(f'{current_user.username} connected to /show_server')
 
+
+@sio.on('join', namespace='/show_server')
+def _(data):
+
+    server = AppServer.query.get(data['server_id'])
+    server_room_name = f'Server{server.id}'
+
+    if current_user not in server.clients:
+        join_room(f'Server{server.id}')
+        current_user.server_id = server.id
+        db.session.commit()
+        print(f"{current_user.username} connected to Server{server.id}")
+
+    emit('connected_users_count', {'users_count': len(server.clients)}, to=server_room_name, broadcast=True)
 
 
 @sio.on('disconnect', namespace='/show_server')
 def _():
-    print(current_user.username + ' left the show_server_room')
-    leave_room('show_server_room')
-    SHOW_SERVER_ROOM_USERS.remove(current_user.username)
-    print(SHOW_SERVER_ROOM_USERS)
-    emit('connected_users_count', {'users_count': len(SHOW_SERVER_ROOM_USERS)}, to='show_server_room', broadcast=True)
+    server = AppServer.query.get(current_user.server_id)
+    server_room_name = f'Server{server.id}'
+
+    print(current_user.username + ' left Server' + str(server.id))
+    leave_room(f'Server{server.id}')
+
+    current_user.server_id = None
+    db.session.commit()
 
 
-
-@sio.on('join', namespace='/show_server')
-def _():
-    if current_user.username not in SHOW_SERVER_ROOM_USERS:
-        join_room('show_server_room')
-        SHOW_SERVER_ROOM_USERS.append(current_user.username)
-
-
-    emit('connected_users_count', {'users_count': len(SHOW_SERVER_ROOM_USERS)}, to='show_server_room', broadcast=True)
+    emit('connected_users_count', {'users_count': len(server.clients)}, to=server_room_name, broadcast=True)
 
 
 
 @sio.on('new_msg', namespace='/show_server')
 def _(data):
-    print(current_user.username + ' sent a message on show_server_room')
-    emit('append_msg', {'username': current_user.username, 'msg': data['msg']}, to='show_server_room', include_self=False)
 
+    server = AppServer.query.get(data['server_id'])
 
+    server_room_name = f'Server{server.id}'
+    msg = data['msg']
 
-
-
-
-
-
+    print(current_user.username + ' sent a message on Server' + str(server.id))
+    emit('append_msg', {'username': current_user.username, 'msg': msg}, to=server_room_name, include_self=False)
 
 
 
@@ -69,6 +73,9 @@ def _():
     room = AppServerRoom.query.get(current_user.room_id)
 
     print(current_user.username + ' left the Table'+ str(room.id))
+    
+    server = AppServer.query.get(current_user.server_id)
+    server_room_name = f'Server{server.id}'
 
     current_user.room_id = None
     db.session.commit()
@@ -80,8 +87,8 @@ def _():
     emit('connected_users_count', {'users_count': len(room.clients)}, to=f'Table{room.id}', broadcast=True)
     emit('disconnected', {'username': current_user.username}, include_self=True, to=f'Table{room.id}', broadcast=True)
 
-    # update table users count
-    emit('update_table_users_count', {'room_id': room.id, 'table_users_count': len(room.clients)}, namespace='/show_server', to='show_server_room', broadcast=True)
+    # update table users count on /show_server nsp
+    emit('update_table_users_count', {'room_id': room.id, 'table_users_count': len(room.clients)}, namespace='/show_server', to=server_room_name, broadcast=True)
 
 
 
@@ -91,6 +98,10 @@ def _(data):
 
     server_id = data['server_id']
     room_id = data['room_id']
+
+    server = AppServer.query.get(server_id)
+    server_room_name = f'Server{server.id}'
+
     room = AppServerRoom.query.get(room_id)
     join_room(f'Table{room.id}')
 
@@ -105,8 +116,8 @@ def _(data):
     emit('joined', {'username': current_user.username}, to=f'Table{room.id}', broadcast=True, include_self=False)
     emit('connected_users_count', {'users_count': len(room.clients)}, to=f'Table{room.id}', broadcast=True)
 
-    # update table users count
-    emit('update_table_users_count', {'room_id': room.id, 'table_users_count': len(room.clients)}, namespace='/show_server', to='show_server_room', broadcast=True)
+    # update table users count on /show_server nsp
+    emit('update_table_users_count', {'room_id': room.id, 'table_users_count': len(room.clients)}, namespace='/show_server', to=server_room_name, broadcast=True)
 
 
 

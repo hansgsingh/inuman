@@ -1,9 +1,22 @@
 const socket = io('/show_server')
 
+const url = window.location.href;
+const pathname = new URL(url).pathname;
+var paths = pathname.split('/')
+
+// remove empty strings 
+paths = paths.filter(e => e)
+
+const server_id = paths[0]
+
+
+
 socket.on('connect', ()=>{
     console.log(socket.id + ' connected')
 
-    socket.emit('join')
+
+    
+    socket.emit('join', {server_id: server_id})
 
 })
 
@@ -11,7 +24,6 @@ socket.on('connected_users_count', (data)=>{
     let users_count_element = document.getElementById('active-users-count')
     users_count_element.innerHTML = 'CONNECTED USERS: ' + data.users_count
 })
-
 
 
 
@@ -31,6 +43,9 @@ socket.on('update_table_users_count', (data) => {
 })
 
 
+
+
+
 function checkKey(e){
     var enterKey = 13;
     if (e.which == enterKey){
@@ -43,7 +58,7 @@ function checkKey(e){
         
         let msg_html = msg_div + msg_p + msg_end_div
         msg_container.innerHTML += msg_html
-        socket.emit('new_msg', {msg: msg_input.value})
+        socket.emit('new_msg', {msg: msg_input.value, server_id: server_id})
         msg_input.value = '';
     }
 }
