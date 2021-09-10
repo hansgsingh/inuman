@@ -75,7 +75,7 @@ body, html {
 #rooms {
     color: white;
     font-family: 'Josefin Sans', sans-serif;
-    height: 50vh;
+    height: 100vh;
 
 
 }
@@ -93,12 +93,36 @@ body, html {
     background-color: white;
 }
 
+
+
+.round-container {
+    width: 330px; 
+    height: 150px;
+    padding: 20px;
+    transition: .5s;
+
+}
+
+.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .round {
     border-radius: 100%;
     height: 150px;
-    width: 160px;
+    width: 100%;
     background-color: #1F2833;
-    transition: .5s;
+
+    margin-top: 40px;
+    margin: 0 auto;
+    display: block;
+    padding: 10px;
+
+}
+
+.user-table-img {
+    display: none;
 }
 
 .round-text {

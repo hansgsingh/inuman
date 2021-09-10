@@ -11,21 +11,19 @@ const server_id = paths[0]
 
 
 
-
 socket.on('connect', ()=>{
     console.log(socket.id + ' connected')
-
-
     
     socket.emit('join', {server_id: server_id})
 
 })
 
+
+
 socket.on('connected_users_count', (data)=>{
     let users_count_element = document.getElementById('active-users-count')
     users_count_element.innerHTML = 'CONNECTED USERS: ' + data.users_count
 })
-
 
 
 
@@ -44,6 +42,48 @@ socket.on('append_msg', (data) => {
 socket.on('update_table_users_count', (data) => {
     $('#table-'+ data.room_id + '-users-count').html('users: ' + data.table_users_count);
 })
+
+socket.on('update_table_users_images', (data) => {
+    let img_html = ''
+    if (data.disconnect){
+        $('#round-container-' + data.room_id).find('#user-in-table-img-' + data.user_id).remove()
+
+    } else {
+        // APPEND IMAGE FILE TO ROUND-TABLE-CONTAINER 
+        switch(data.table_users_count){
+            case 1:
+                img_html = `
+                <img class="user-table-img" src="/static/images/` + data.image_file + `" id='user-in-table-img-` + data.user_id + `' style="width: 50px; height: 45px; border-radius: 100%" alt=""/>
+                `;
+
+                // FIND TABLE
+                $('#round-container-' + data.room_id).find('#top-pic').html(img_html)
+                break
+            case 2:
+                img_html = `
+                <img class="user-table-img" src="/static/images/` + data.image_file + `" id='user-in-table-img-` + data.user_id + `' style="width: 50px; height: 45px; border-radius: 100%; margin-top: 50px;" alt=""/>
+                `;
+                $('#round-container-' + data.room_id).find('#left-pic').html(img_html)
+                break
+            case 3:
+                img_html = `
+                <img class="user-table-img" src="/static/images/` + data.image_file + `" id='user-in-table-img-` + data.user_id + `' style="width: 50px; height: 45px; border-radius: 100%; margin-top: 50px;" alt=""/>
+                `;
+                $('#round-container-' + data.room_id).find('#right-pic').html(img_html)
+                break
+            case 4:
+                img_html = `
+                <img class="user-table-img" src="/static/images/` + data.image_file + `" id='user-in-table-img-` + data.user_id + `' style="width: 50px; height: 45px; border-radius: 100%"  alt=""/>
+                `;
+                $('#round-container-' + data.room_id).find('#bottom-pic').html(img_html)
+                break
+            default:
+                break;
+        }
+    }
+
+})
+
 
 
 
@@ -87,15 +127,19 @@ $(document).ready(function() {
 
 
 
-    $(".round").on({
+// TABLE ON HOVER
+// SHOW USERS INSIDE
+    $(".round-container").on({
         mouseenter: function () {
             //stuff to do on mouse enter
             $(this).css('transform', 'scale(1.5)');
             $(this).dimBackground();
+            $(this).find(".user-table-img").show(500)
         },
         mouseleave: function () {
             $(this).css('transform', 'scale(1.0)');
             $.undim();
+            $(this).find(".user-table-img").hide(500)
 
         }
     });

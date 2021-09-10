@@ -49,21 +49,99 @@
         <div class="container mb-4" id="tables-container">
             <div class="row text-center">
                 {% for room in server.rooms %}
-                    <div class="round ms-5 mt-2">
+                    <div class="round-container" id="round-container-{{room.id}}">
+                        <!-- TOP PIC -->
+                        <div class="row">
+                            <div class="col text-center" id="top-pic">
+                                {% if room.clients|length >= 1 %}
+                                <img class="user-table-img" src="{{url_for('static', filename='images/' + room.clients[0].image_file)}}" id='user-in-table-img-{{room.clients[0].id}}' style="width: 50px; height: 45px; border-radius: 100%" alt=""/>      
+                                {% endif %}
 
-                        <div class="round-text">
-                            {{ room.name }}
-                            <small class="room-users-count" id="table-{{room.id}}-users-count">users: {{room.clients|length}}</small>
-                            <button data-link="{{ url_for('show_room', server_id=server.id, room_id=room.id) }}" class="btn join-table"><span>JOIN</span></button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- LEFT PIC -->
+                            <div class="col-lg-3 d-flex flex-row-reverse no-padding" id="left-pic">
+                                {% if room.clients|length >= 2 %}
+                                <img class="user-table-img" src="{{url_for('static', filename='images/' + room.clients[1].image_file)}}" id='user-in-table-img-{{room.clients[1].id}}' style="width: 50px; height: 45px; border-radius: 100%; margin-top: 50px;" alt=""/>
+                                {% endif %}
+                            </div>
+
+                            <!-- TABLE -->
+                            <div class="col-lg-6" style="padding: 0;">
+                                <div class="round">
+                                    <div class="round-text">
+                                        {{ room.name }}
+                                        <small class="room-users-count" id="table-{{room.id}}-users-count">users: {{room.clients|length}}</small>
+                                        <button data-link="{{ url_for('show_room', server_id=server.id, room_id=room.id) }}" class="btn join-table"><span>JOIN</span></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- RIGHT PIC -->
+                            <div class="col-lg-3 text-center d-flex flex-row no-padding" id="right-pic">
+                                {% if room.clients|length >= 3 %}
+                                <img class="user-table-img" src="{{url_for('static', filename='images/' + room.clients[2].id)}}" id='user-in-table-img-{{room.clients[2].id}}' style="width: 50px; height: 45px; border-radius: 100%; margin-top: 50px;" alt=""/>
+                                {% endif %}
+
+                            </div>
+                        </div>
+
+                        <!-- BOTTOM PIC -->
+                        <div class="row">
+                            <div class="col text-center" id="bottom-pic">
+                                {% if room.clients|length >= 4 %}
+                                <img class="user-table-img" src="{{url_for('static', filename='images/' + room.clients[3].image_file)}}" id='user-in-table-img-{{room.clients[3].id}}' style="width: 50px; height: 45px; border-radius: 100%" alt=""/>
+                                {% endif %}
+
+                            </div>
                         </div>
                     </div>
-                {% endfor %}
 
 
-                
+
+
+
+                {% endfor %}                
             </div>
-            
+
+
+            <!-- <div class="row">
+                <div class="round-container">
+                    <div class="row">
+                        <div class="col text-center">
+                            <img src="{{url_for('static', filename='images/default.jpg')}}" id='user-in-table-img' style="width: 50px; height: 45px; border-radius: 100%" alt=""/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 d-flex flex-row-reverse">
+                            <img src="{{url_for('static', filename='images/default.jpg')}}" id='user-in-table-img' style="width: 50px; height: 45px; border-radius: 100%; margin-top: 50px;" alt=""/>
+                        </div>
+                        <div class="col-lg-6" style="padding: 0;">
+                            <div class="round">
+                                <div class="round-text text-center">
+                                    Table 1 Test
+                                    <small class="room-users-count" id="">users: </small>
+                                    <button data-link="" class="btn join-table"><span>JOIN</span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 text-center d-flex flex-row">
+                            <img src="{{url_for('static', filename='images/default.jpg')}}" id='user-in-table-img' style="width: 50px; height: 45px; border-radius: 100%; margin-top: 50px;" alt=""/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <img src="{{url_for('static', filename='images/default.jpg')}}" id='user-in-table-img' style="width: 50px; height: 45px; border-radius: 100%" alt=""/>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div> -->
         </div>
+            
 </section>
 
 <section>

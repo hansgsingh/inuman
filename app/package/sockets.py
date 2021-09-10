@@ -118,9 +118,13 @@ def _():
         # update table users count on /show_server nsp
         emit('update_table_users_count', {'room_id': room.id, 'table_users_count': len(room.clients)}, namespace='/show_server', to=server_room_name, broadcast=True)
 
+        # update table user images count on /show_server nsp
+        emit('update_table_users_images', {'room_id': room.id, 'image_file': current_user.image_file, 'user_id': current_user.id, 'disconnect': True}, namespace='/show_server', to=server_room_name, broadcast=True)
 
 
 
+
+# JOIN TABLE
 @sio.on('join', namespace='/show_room')
 def _(data):
 
@@ -151,6 +155,9 @@ def _(data):
 
         # update table users count on /show_server nsp
         emit('update_table_users_count', {'room_id': room.id, 'table_users_count': len(room.clients)}, namespace='/show_server', to=server_room_name, broadcast=True)
+
+        # update table user images count on /show_server nsp
+        emit('update_table_users_images', {'room_id': room.id, 'image_file': current_user.image_file, 'user_id' : current_user.id, 'table_users_count': len(room.clients)}, namespace='/show_server', to=server_room_name, broadcast=True)
 
 
 
